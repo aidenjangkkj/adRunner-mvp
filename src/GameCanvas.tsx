@@ -105,6 +105,7 @@ export default function GameCanvas() {
   const rafRef = useRef<number | null>(null);
 
   const [hud, setHud] = useState<HudState>({ value: 1, dist: 0, alive: true });
+  const [gameVersion, setGameVersion] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -113,8 +114,13 @@ export default function GameCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    setHud({ value: 1, dist: 0, alive: true });
     return runGame(canvas, ctx, rafRef, setHud);
-  }, []);
+  }, [gameVersion]);
+
+  const handleRestart = () => {
+    setGameVersion((version) => version + 1);
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -136,6 +142,29 @@ export default function GameCanvas() {
         <br />
         {hud.alive ? "" : "DEAD"}
       </div>
+      {!hud.alive && (
+        <button
+          type="button"
+          onClick={handleRestart}
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "60%",
+            transform: "translate(-50%, -50%)",
+            padding: "10px 24px",
+            font: "bold 16px system-ui",
+            color: "#111",
+            background: "#f5f5f5",
+            border: "none",
+            borderRadius: 999,
+            cursor: "pointer",
+            boxShadow: "0 8px 16px rgba(0,0,0,0.25)",
+            zIndex: 1,
+          }}
+        >
+          재시작
+        </button>
+      )}
     </div>
   );
 }
