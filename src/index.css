@@ -1,0 +1,13 @@
+:root {
+  color-scheme: dark;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #111;
+}
+* {
+  box-sizing: border-box;
+}
