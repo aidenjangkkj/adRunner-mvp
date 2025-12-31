@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# adRunner MVP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+간단한 React + TypeScript + Vite 기반 러너 게임입니다. 플레이어는 좌우로 움직이며 숫자 게이트와 좀비/보스를 회피하거나 부딪혀 수치를 관리합니다. 게이트로 숫자(플레이어 수)를 늘리고, 장애물/보스를 처리하면 공격력이 강화되며 거리를 늘려 보스를 만나면 승리 또는 실패 조건이 발생합니다.
 
-Currently, two official plugins are available:
+## 주요 특징
+- 손가락/마우스 드래그로 좌우 이동
+- 게이트 통과로 `VALUE`(플레이어 수)가 변화하고 HUD에 반영
+- 좀비/보스/장애물/아이템을 거리에 따라 스폰 및 강화
+- 장애물을 파괴하면 공격력 아이템 드롭, 픽업시 총알 데미지 상승
+- 보스가 화면 하단에 도달하거나 플레이어 수가 0이 되면 게임 오버
+- 플레이어 수가 많아질수록 캐릭터 간격이 좁아지며, 공격력 증가 시 시각 효과 제공
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 개발
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- `npm run dev`로 Vite 개발 서버 실행 (기본 http://localhost:5173)
+- `npm run build`로 프로덕션 번들 생성
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 구조
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `src/GameCanvas.tsx` : 캔버스 기반 게임 루프 및 렌더링, 게이트·적·보스·아이템 등의 로직 포함
+- `src/App.tsx` : 전체 레이아웃 및 HUD/게임 캔버스를 중앙 배치
+
+## 다음 작업 아이디어
+
+1. 난이도 조정을 위한 보스/좀비 스폰 밀도 튜닝
+2. 장애물과 아이템 종류 확대
+3. 모바일/터치 입력 최적화
